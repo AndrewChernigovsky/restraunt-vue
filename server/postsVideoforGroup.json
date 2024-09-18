@@ -1,0 +1,68 @@
+[
+  {
+    "id": 1,
+    "texts": [
+      "2024-08-21 Разбираем методы javascript по работе с DOM-деревом.",
+      "document.querySelector, document.querySelectorAll e.t.c",
+      "Разбираем методы работы с коллекциями ( живые и неживые )",
+      "Обзор на библиотеку Three.js"
+    ],
+    "videoLink": "https://vk.com/video_ext.php?oid=-227182560&id=456239017&hd=2&autoplay=0",
+    "presentationLink": "presentation-2024-08-21.pdf"
+  },
+  {
+    "id": 2,
+    "texts": [
+      "2024-08-21 Разбираем методы javascript по работе с DOM-деревом.",
+      "document.querySelector, document.querySelectorAll e.t.c",
+      "Разбираем методы работы с коллекциями ( живые и неживые )",
+      "Обзор на библиотеку Three.js"
+    ],
+    "videoLink": "https://vk.com/video_ext.php?oid=-227182560&id=456239020&hd=2&autoplay=0",
+    "presentationLink": "presentation-2024-08-21.pdf"
+  },
+  {
+    "id": 3,
+    "texts": [
+      "2024-08-21 Разбираем методы javascript по работе с DOM-деревом.",
+      "document.querySelector, document.querySelectorAll e.t.c",
+      "Разбираем методы работы с коллекциями ( живые и неживые )",
+      "Обзор на библиотеку Three.js"
+    ],
+    "videoLink": "https://vk.com/video_ext.php?oid=-227182560&id=456239019&hd=2&autoplay=0",
+    "presentationLink": "presentation-2024-08-21.pdf"
+  },
+  {
+    "id": 4,
+    "texts": [
+      "2024-08-21 Разбираем методы javascript по работе с DOM-деревом.",
+      "document.querySelector, document.querySelectorAll e.t.c",
+      "Разбираем методы работы с коллекциями ( живые и неживые )",
+      "Обзор на библиотеку Three.js"
+    ],
+    "videoLink": "https://vk.com/video_ext.php?oid=-227182560&id=456239020&hd=2&autoplay=0",
+    "presentationLink": "presentation-2024-08-21.pdf"
+  },
+  {
+    "id": 5,
+    "texts": [
+      "2024-08-21 Разбираем методы javascript по работе с DOM-деревом.",
+      "document.querySelector, document.querySelectorAll e.t.c",
+      "Разбираем методы работы с коллекциями ( живые и неживые )",
+      "Обзор на библиотеку Three.js"
+    ],
+    "videoLink": "https://vk.com/video_ext.php?oid=-227182560&id=456239021&autoplay=0",
+    "presentationLink": "presentation-2024-08-21.pdf"
+  },
+  {
+    "id": 6,
+    "texts": [
+      "2024-08-21 Разбираем методы javascript по работе с DOM-деревом.",
+      "document.querySelector, document.querySelectorAll e.t.c",
+      "Разбираем методы работы с коллекциями ( живые и неживые )",
+      "Обзор на библиотеку Three.js"
+    ],
+    "videoLink": "https://vk.com/video_ext.php?oid=-227182560&id=456239022&autoplay=0",
+    "presentationLink": "presentation-2024-08-21.pdf"
+  }
+]

@@ -1,0 +1,25 @@
+body {
+  color: var(--color-text);
+}
+
+[data-theme='hard'] {
+  --color-text: $BASE_TEXT;
+  --color-link: $WHITE;
+}
+
+[data-theme='simple'] {
+  --color-text: $BLACK;
+  --color-link: $WHITE;
+}
+
+p {
+  color: var(--color-text);
+}
+
+a {
+  color: var(--color-link);
+}
+
+ul {
+  color: var(--color-text)
+}

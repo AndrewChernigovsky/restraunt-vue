@@ -1,0 +1,12 @@
+@font-face {
+  font-family: 'Gilroy';
+  src: url('~@/assets/fonts/gilroy-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+.third-title {
+  font-size: 24px;
+  line-height: 30px;
+  color: $WHITE;
+}
