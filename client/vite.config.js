@@ -12,15 +12,12 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, 'src'), // Устанавливаем алиас '@' для папки 'src'
     },
-    extensions: ['.js', '.ts', '.jsx', '.tsx', '.vue']
   },
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `
-          @import "./src/styles/global.scss";
-        `
+        additionalData: `@import "./src/styles/global.scss";`
       }
     }
-  },
+  }
 })
