@@ -9,7 +9,7 @@
       <label for=""
         >Link Path: <input type="text" v-model="newLink.path"
       /></label>
-      <button @click="addLink">add</button>
+      <button type="button" @click="addLink">add</button>
       <p>Все добавленные ссылки:</p>
       <ul>
         <li v-for="link in links" :key="link.name">
@@ -22,19 +22,29 @@
   </div>
 </template>
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 
 const links = ref([]);
 const newLink = ref({ name: '', path: '' });
 
-async function createMenu() {
+async function fetchLinks() {
   try {
     const response = await fetch(
-      'http://restraunt-vue/server/db/create-menu-links.php'
-    );
+      'http://restraunt-vue/server/db/get-menu-links.php'
+    ); // Убедитесь, что URL правильный
+    if (!response.ok) {
+      throw new Error('Ошибка сети');
+    }
+    const data = await response.json();
+    console.log(data, 'data');
+    links.value = data; // Предполагаем, что ответ - это массив объектов ссылок
   } catch (error) {
-    console.error('Ошибка:', error);
+    console.error('Ошибка при получении данных:', error);
   }
+}
+
+function addLink() {
+  links.value.push({ ...newLink.value });
 }
 
 async function submitForm() {
@@ -73,5 +83,6 @@ async function submitForm() {
     alert('Пожалуйста, заполните все поля.');
   }
 }
+onMounted(fetchLinks);
 </script>
 <style lang=""></style>

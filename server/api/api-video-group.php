@@ -1,6 +1,6 @@
 <?php
-include '/server/class/FileExit.php';
-$filePath = '/server/postsVideoforGroup.json';
-$fileName = 'postsVideoforGroup.json';
-new FileExit($filePath, $fileName);
+include './../class/FileExit.php';
+$filePath1 = './../postsVideoforGroup.json';
+$fileName1 = 'postsVideoforGroup.json';
+new FileExit($filePath1, $fileName1);
 ?>

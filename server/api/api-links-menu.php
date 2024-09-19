@@ -1,6 +1,6 @@
 <?php
-include '/server/class/FileExit.php';
-$filePath = '/server/linksMenu.json';
+include './../class/FileExit.php';
+$filePath = './../linksMenu.json';
 $fileName = 'linksMenu.json';
 new FileExit($filePath, $fileName);
 ?>
