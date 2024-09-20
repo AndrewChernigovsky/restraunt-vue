@@ -12,6 +12,13 @@
       <button type="button" @click="addLink">add</button>
       <p>Все добавленные ссылки:</p>
       <ul>
+        <li v-for="link in dataBaseLinks" :key="link.name">
+          {{ link.name + ' ' + link.path }}
+          <button type="button" @click="deleteLink(link)">Delete</button>
+        </li>
+      </ul>
+      <p>Все новые ссылки:</p>
+      <ul>
         <li v-for="link in links" :key="link.name">
           {{ link.name + ' ' + link.path }}
           <button type="button" @click="deleteLink(link)">Delete</button>
@@ -26,6 +33,7 @@ import { ref, onMounted } from 'vue';
 
 const links = ref([]);
 const newLink = ref({ name: '', path: '' });
+const dataBaseLinks = ref([]);
 
 async function fetchLinks() {
   try {
@@ -37,7 +45,7 @@ async function fetchLinks() {
     }
     const data = await response.json();
     console.log(data, 'data');
-    links.value = data; // Предполагаем, что ответ - это массив объектов ссылок
+    dataBaseLinks.value = data; // Предполагаем, что ответ - это массив объектов ссылок
   } catch (error) {
     console.error('Ошибка при получении данных:', error);
   }
@@ -50,22 +58,25 @@ function addLink() {
 async function submitForm() {
   // Добавляем новую ссылку в массив
   if (newLink.value.name && newLink.value.path) {
+    links.value = dataBaseLinks.value.filter(
+      (link1) =>
+        !links.value.some(
+          (link2) => link1.name === link2.name && link1.path === link2.path
+        )
+    );
     links.value.push({ ...newLink.value });
 
     // Формируем данные для отправки
     const dataToSend = JSON.stringify(links.value);
 
     try {
-      const response = await fetch(
-        'http://restraunt-vue/server/db/create-menu-links.php',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: dataToSend,
-        }
-      );
+      const response = await fetch('http://restraunt-vue/server/test.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: dataToSend,
+      });
 
       if (!response.ok) {
         throw new Error('Network response was not ok');
