@@ -22,7 +22,8 @@ if (isset($_GET['action'])) {
     case 'links':
       $database1 = new TABLELINKS($host, $username, $password, $databaseName);
       $database1->initTableLinks($tableLinks);
-      $database1->insertIntoTable($tableLinks, 'Главная', '/');
+      // $database1->initTableLinks($tableLinks);
+      $database1->insertIntoTable($tableLinks, ['Главная', '/']);
       break;
     default:
       echo json_encode(['error' => 'Неизвестное действие.']);

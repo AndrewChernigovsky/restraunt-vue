@@ -21,8 +21,6 @@ class CRUDDB extends ConnectDB
     } else {
       $this->getConnection()->query($tableCreationQuery);
     }
-
-    $this->closeConnection();
   }
   public function deleteTable($tableName)
   {
@@ -42,6 +40,26 @@ class CRUDDB extends ConnectDB
     }
 
     $addFieldsQuery .= implode(", ", $fieldDefinitions);
+    // echo $addFieldsQuery;
+
+    if ($this->getConnection()->query($addFieldsQuery) !== TRUE) {
+      echo json_encode(['error' => 'Ошибка добавления полей: ' . $this->getConnection()->error]);
+      exit;
+    } else {
+      echo json_encode(['message' => 'Поля успешно добавлены.']);
+    }
+  }
+  public function createDataFields($tableName, $fields)
+  {
+    $addFieldsQuery = "ALTER TABLE $tableName ";
+    $fieldDefinitions = [];
+
+    foreach ($fields as $field) {
+      $fieldDefinitions[] = "INSERT ADD INTO $tableName VALUES ($field)";
+    }
+
+    $addFieldsQuery .= implode(", ", $fieldDefinitions);
+    echo $addFieldsQuery;
 
     if ($this->getConnection()->query($addFieldsQuery) !== TRUE) {
       echo json_encode(['error' => 'Ошибка добавления полей: ' . $this->getConnection()->error]);
