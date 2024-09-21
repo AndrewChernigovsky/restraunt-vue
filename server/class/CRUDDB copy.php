@@ -1,9 +1,18 @@
 <?php
-header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type');
-header('Access-Control-Allow-Credentials: true');
+
+include 'ConnectDB';
+
+class CRUDDataBase extends ConnectDB
+{
+  public function createTable($tableCreationQuery)
+  {
+    if ($this->getConnection()->query($tableCreationQuery) !== TRUE) {
+      echo json_encode(['error' => 'Ошибка создания таблицы: ' . $this->getConnection()->error]);
+      exit;
+    }
+  }
+
+}
 
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   // Если это preflight-запрос, просто возвращаем 200 OK
