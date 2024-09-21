@@ -1,23 +1,35 @@
 <?php
 include './class/CRUDDB.php';
+include './db/TABLELINKS.php';
 
-$tableName = 'linksMenu';
-$tableCreationQuery = "
-CREATE TABLE IF NOT EXISTS linksMenu (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    path VARCHAR(255) NOT NULL
-)";
+$tableLinks = "linksMenu";
 
-// Настройки подключения к базе данных
 $host = '127.0.0.1';
 $username = 'root';
 $password = '';
-$database = 'restaurant';
+$databaseName = 'restaurant';
 
-// Создание подключения
-$database = new CRUDDB($host, $username, $password, $database);
+$database = new CRUDDB($host, $username, $password, $databaseName);
 
-// Создание таблицы
-$database->createTable($tableCreationQuery, $tableName);
+if (isset($_GET['action'])) {
+  switch ($_GET['action']) {
+    case 'create':
+      $database->createTable($tableLinks);
+      break;
+    case 'delete':
+      $database->deleteTable($tableLinks);
+      break;
+    case 'links':
+      $database1 = new TABLELINKS($host, $username, $password, $databaseName);
+      $database1->initTableLinks($tableLinks);
+      $database1->insertIntoTable($tableLinks, 'Главная', '/');
+      break;
+    default:
+      echo json_encode(['error' => 'Неизвестное действие.']);
+  }
+} else {
+  echo json_encode(['error' => 'Действие не указано.']);
+}
+
+
 ?>
