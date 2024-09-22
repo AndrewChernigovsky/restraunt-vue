@@ -18,9 +18,7 @@ class TABLELINKS extends CRUDDB
     $this->createTable($tableName);
 
     foreach ($data as $link) {
-
       $this->createDataFields($tableName, $link);
-
     }
   }
 }

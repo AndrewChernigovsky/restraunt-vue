@@ -68,5 +68,65 @@ class CRUDDB extends ConnectDB
       echo json_encode(['message' => 'Поля успешно добавлены.']);
     }
   }
+
+  public function getData($tableName)
+  {
+    if ($this->getConnection()->connect_error) {
+      die("Ошибка подключения: " . $this->getConnection()->connect_error);
+    }
+
+    $sql = "SELECT id, name, path FROM $tableName";
+    $result = $this->getConnection()->query($sql);
+
+    $links = [];
+    if ($result->num_rows > 0) {
+      while ($row = $result->fetch_assoc()) {
+        $links[] = $row;
+      }
+    }
+
+    echo json_encode($links);
+  }
+
+  public function addLink($tableName, $name, $path)
+  {
+    $insertQuery = "INSERT INTO $tableName (name, path) VALUES (?, ?)";
+
+    $stmt = $this->getConnection()->prepare($insertQuery);
+    if ($stmt === false) {
+      echo json_encode(['error' => 'Ошибка подготовки запроса: ' . $this->getConnection()->error]);
+      exit;
+    }
+
+    $stmt->bind_param("ss", $name, $path);
+
+    if ($stmt->execute() === TRUE) {
+      echo json_encode(['message' => 'Запись успешно добавлена.']);
+    } else {
+      echo json_encode(['error' => 'Ошибка добавления записи: ' . $stmt->error]);
+    }
+
+    $stmt->close();
+  }
+  public function deleteLink($tableName, $id)
+  {
+    $deleteQuery = "DELETE FROM $tableName WHERE id = ?";
+
+    $stmt = $this->getConnection()->prepare($deleteQuery);
+    if ($stmt === false) {
+      echo json_encode(['error' => 'Ошибка подготовки запроса: ' . $this->getConnection()->error]);
+      exit;
+    }
+
+    // Привязка параметра id
+    $stmt->bind_param("i", $id); // Предполагаем, что id - это целое число
+
+    // Выполнение запроса
+    if ($stmt->execute() === TRUE) {
+      echo json_encode(['message' => 'Запись успешно удалена.']);
+    } else {
+      echo json_encode(['error' => 'Ошибка удаления записи: ' . $stmt->error]);
+    }
+  }
 }
 ?>

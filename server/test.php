@@ -19,11 +19,30 @@ if (isset($_GET['action'])) {
     case 'delete':
       $database->deleteTable($tableLinks);
       break;
-    case 'links':
+    case 'addLink':
       $database1 = new TABLELINKS($host, $username, $password, $databaseName);
       $database1->initTableLinks($tableLinks);
-      // $database1->initTableLinks($tableLinks);
-      $database1->insertIntoTable($tableLinks, ['Главная', '/']);
+      if (isset($_GET['name']) && isset($_GET['path'])) {
+        $name = $_GET['name'];
+        $path = $_GET['path'];
+        $database->addLink($tableLinks, $name, $path);
+
+      } else {
+        echo json_encode(['error' => 'нет имени или пути']);
+      }
+      break;
+    case 'deleteLink':
+      if (isset($_GET['id'])) {
+        $id = $_GET['id'];
+        $database->deleteLink($tableLinks, $id);
+      } else {
+        echo json_encode(['error' => 'ID не указан.']);
+      }
+      break;
+    case 'links':
+      $database1 = new TABLELINKS($host, $username, $password, $databaseName);
+      $database1->insertIntoTable($tableName, $data);
+      echo $database->getData($tableLinks);
       break;
     default:
       echo json_encode(['error' => 'Неизвестное действие.']);

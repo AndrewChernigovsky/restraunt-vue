@@ -43,9 +43,4 @@ class ConnectDB
       $this->conn->close();
     }
   }
-
-  public function test2()
-  {
-    echo 'test2 connect';
-  }
 }
