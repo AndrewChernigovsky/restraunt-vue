@@ -1,107 +1,70 @@
 <template lang="">
   <div>
-    <h2>Редактировать сслыки меню</h2>
+    <h2>Редактировать ссылки меню</h2>
     <button type="button" @click="handleButtonClick('create')">
       Create Table
     </button>
     <button type="button" @click="handleButtonClick('delete')">
       Delete Table
     </button>
-    <button type="button" @click="addLink1">LINKS</button>
 
     <form @submit.prevent="submitForm">
       <label for="">Link: <input type="text" v-model="newLink.name" /></label>
       <label for=""
         >Link Path: <input type="text" v-model="newLink.path"
       /></label>
-      <button type="button" @click="addLink">add</button>
+      <button type="button" @click="addLink(12, newLink.name, newLink.path)">
+        add
+      </button>
       <p>Все ссылки:</p>
       <ul>
-        <li v-for="link in links" :key="link.name">
-          {{ link.name + ' ' + link.path }}
-          <button type="button" @click="deleteLink(link)">Delete</button>
+        <li v-for="link in links.value" :key="link.id">
+          {{ link.name + ' ' + link.path + link.id }}
+          <button type="button" @click="deleteLink(link.id)">Delete</button>
         </li>
       </ul>
-      <button>Опубликовать</button>
     </form>
   </div>
 </template>
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, watchEffect } from 'vue';
+import { useDataLinks } from '@/store/useDataLinks.js';
+import { storeToRefs } from 'pinia';
+
+const store = useDataLinks();
+const { getData } = storeToRefs(store);
 
 const links = ref([]);
-const newLink = ref({ name: '', path: '' });
+const newLink = ref({ id: '', name: '', path: '' });
 const newDataLinks = ref([]);
 
-async function fetchLinks() {
-  try {
-    const response = await fetch(
-      'http://restraunt-vue/server/db/get-menu-links.php'
-    );
-    if (!response.ok) {
-      throw new Error('Ошибка сети');
-    }
-    const data = await response.json();
-    links.value = data;
-  } catch (error) {
-    console.error('Ошибка при получении данных:', error);
-  }
-}
-
-async function addLink() {
+async function addLink(id, name, path) {
   newDataLinks.value.push({ ...newLink.value });
+  console.log(links.value.value, 'VALUEEEEEEE');
   links.value.push({ ...newLink.value });
   try {
-    await fetch(`http://restraunt-vue/server/test.php?action=add`, {
-      method: 'GET',
-    });
-  } catch (error) {
-    console.error('Ошибка при получении данных:', error);
-  }
-}
-
-async function addLink1() {
-  try {
-    await fetch(`http://restraunt-vue/server/test.php?action=links`, {
-      method: 'GET',
-    });
-  } catch (error) {
-    console.error('Ошибка при получении данных:', error);
-  }
-}
-
-async function submitForm() {
-  if (newLink.value.name && newLink.value.path) {
-    // Формируем данные для отправки
-    const dataToSend = JSON.stringify(newDataLinks.value);
-    console.log(dataToSend, 'dataSend');
-
-    try {
-      const response = await fetch('http://restraunt-vue/server/test.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: dataToSend,
-      });
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
+    await fetch(
+      `http://restraunt-vue/server/test.php?action=addLink&id=${id}&name=${name}&path=${path}`,
+      {
+        method: 'GET',
       }
-
-      const result = await response.json();
-      console.log(result); // Выводим результат в консоль
-    } catch (error) {
-      console.error('Ошибка при отправке данных:', error);
-    }
-
-    // Сбросим форму после отправки
-    newLink.value = { name: '', path: '' };
-  } else {
-    alert('Пожалуйста, заполните все поля.');
+    );
+  } catch (error) {
+    console.error('Ошибка при получении данных:', error);
   }
 }
-
+async function deleteLink(id) {
+  try {
+    await fetch(
+      `http://restraunt-vue/server/test.php?action=deleteLink&id=${id}`,
+      {
+        method: 'GET',
+      }
+    );
+  } catch (error) {
+    console.error('Ошибка при получении данных:', error);
+  }
+}
 async function handleButtonClick(action) {
   try {
     await fetch(`http://restraunt-vue/server/test.php?action=${action}`, {
@@ -112,6 +75,8 @@ async function handleButtonClick(action) {
   }
 }
 
-onMounted(fetchLinks);
+watchEffect(() => {
+  links.value = getData;
+});
 </script>
 <style lang=""></style>
