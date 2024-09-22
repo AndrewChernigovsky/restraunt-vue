@@ -12,7 +12,9 @@ class CRUDDB extends ConnectDB
   {
     $tableCreationQuery = "
     CREATE TABLE IF NOT EXISTS $tableName (
-      id INT AUTO_INCREMENT PRIMARY KEY
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(255) NOT NULL,
+      path VARCHAR(255) NOT NULL
     )";
 
     if ($this->getConnection()->query($tableCreationQuery) !== TRUE) {
@@ -29,25 +31,6 @@ class CRUDDB extends ConnectDB
 
     $this->getConnection()->query($tableCreationQuery);
     $this->closeConnection();
-  }
-  public function createTableFields($tableName, $fields)
-  {
-    $addFieldsQuery = "ALTER TABLE $tableName ";
-    $fieldDefinitions = [];
-
-    foreach ($fields as $field) {
-      $fieldDefinitions[] = "ADD COLUMN $field";
-    }
-
-    $addFieldsQuery .= implode(", ", $fieldDefinitions);
-    // echo $addFieldsQuery;
-
-    if ($this->getConnection()->query($addFieldsQuery) !== TRUE) {
-      echo json_encode(['error' => 'Ошибка добавления полей: ' . $this->getConnection()->error]);
-      exit;
-    } else {
-      echo json_encode(['message' => 'Поля успешно добавлены.']);
-    }
   }
   public function createDataFields($tableName, $fields)
   {

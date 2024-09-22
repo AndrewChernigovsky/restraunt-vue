@@ -5,13 +5,7 @@ class TABLELINKS extends CRUDDB
 {
   public function initTableLinks($tableName)
   {
-    $newFields = [
-      'name VARCHAR(255) NOT NULL',
-      'path VARCHAR(255) NOT NULL'
-    ];
-
     $this->createTable($tableName);
-    $this->createTableFields($tableName, $newFields);
   }
   public function insertIntoTable($tableName, $data)
   {

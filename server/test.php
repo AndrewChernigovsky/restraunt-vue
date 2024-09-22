@@ -12,19 +12,20 @@ $databaseName = 'restaurant';
 $database = new CRUDDB($host, $username, $password, $databaseName);
 
 if (isset($_GET['action'])) {
+  $database1 = new TABLELINKS($host, $username, $password, $databaseName);
   switch ($_GET['action']) {
     case 'create':
-      $database->createTable($tableLinks);
+      $database1->initTableLinks($tableLinks);
       break;
     case 'delete':
       $database->deleteTable($tableLinks);
       break;
     case 'addLink':
-      $database1 = new TABLELINKS($host, $username, $password, $databaseName);
-      $database1->initTableLinks($tableLinks);
       if (isset($_GET['name']) && isset($_GET['path'])) {
         $name = $_GET['name'];
         $path = $_GET['path'];
+        // $database1 = new TABLELINKS($host, $username, $password, $databaseName);
+        // $database1->initTableLinks($tableLinks);
         $database->addLink($tableLinks, $name, $path);
 
       } else {
@@ -41,7 +42,7 @@ if (isset($_GET['action'])) {
       break;
     case 'links':
       $database1 = new TABLELINKS($host, $username, $password, $databaseName);
-      $database1->insertIntoTable($tableName, $data);
+      // $database1->insertIntoTable($tableName, $data);
       echo $database->getData($tableLinks);
       break;
     default:

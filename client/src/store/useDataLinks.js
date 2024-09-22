@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 
 export const useDataLinks = defineStore('dataStoreLinks', () => {
   const data = ref([])
@@ -22,11 +22,20 @@ export const useDataLinks = defineStore('dataStoreLinks', () => {
     }
   }
 
+  function addLink(link) {
+    return data.value.push(link)
+  }
+
+  function removeLink(id) {
+    const filteredLinks = data.value.filter(link => link.id !== id);
+    data.value = filteredLinks;
+  }
+
   (async () => {
     await fetchLinks()
   })();
 
   return {
-    data, getData
+    data, getData, addLink, removeLink
   }
 });

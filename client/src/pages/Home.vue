@@ -1,19 +1,21 @@
 <template lang="">
   <div>
     <h2>Редактировать ссылки меню</h2>
-    <button type="button" @click="handleButtonClick('create')">
-      Create Table
-    </button>
-    <button type="button" @click="handleButtonClick('delete')">
-      Delete Table
-    </button>
+    <div class="buttons-edit">
+      <button type="button" @click="handleButtonClick('create')">
+        Create Table
+      </button>
+      <button type="button" @click="handleButtonClick('delete')">
+        Delete Table
+      </button>
+    </div>
 
     <form @submit.prevent="submitForm">
       <label for="">Link: <input type="text" v-model="newLink.name" /></label>
       <label for=""
         >Link Path: <input type="text" v-model="newLink.path"
       /></label>
-      <button type="button" @click="addLink(12, newLink.name, newLink.path)">
+      <button type="button" @click="addedLink(newLink.name, newLink.path)">
         add
       </button>
       <p>Все ссылки:</p>
@@ -33,15 +35,15 @@ import { storeToRefs } from 'pinia';
 
 const store = useDataLinks();
 const { getData } = storeToRefs(store);
+// const { addLink } = useDataLinks();
 
 const links = ref([]);
-const newLink = ref({ id: '', name: '', path: '' });
+const newLink = ref({ name: '', path: '' });
 const newDataLinks = ref([]);
 
-async function addLink(id, name, path) {
-  newDataLinks.value.push({ ...newLink.value });
-  console.log(links.value.value, 'VALUEEEEEEE');
-  links.value.push({ ...newLink.value });
+async function addedLink(name, path) {
+  const newLinkEntry = { name: name, path: path };
+  store.addLink(newLinkEntry);
   try {
     await fetch(
       `http://restraunt-vue/server/test.php?action=addLink&id=${id}&name=${name}&path=${path}`,
@@ -61,6 +63,7 @@ async function deleteLink(id) {
         method: 'GET',
       }
     );
+    store.removeLink(id);
   } catch (error) {
     console.error('Ошибка при получении данных:', error);
   }
@@ -79,4 +82,10 @@ watchEffect(() => {
   links.value = getData;
 });
 </script>
-<style lang=""></style>
+<style lang="scss" scoped>
+.buttons-edit {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+</style>
