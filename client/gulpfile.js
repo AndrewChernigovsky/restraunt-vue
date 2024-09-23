@@ -2,7 +2,7 @@ import gulp from 'gulp';
 import svgSprite from 'gulp-svg-sprite';
 
 export const createSprite = () => {
-  return gulp.src('src/images/icons/*.svg') // Adjust the path to your SVG files
+  return gulp.src('src/images/icons/*.svg')
     .pipe(svgSprite({
       mode: {
         sprite: "sprite.svg",
@@ -15,20 +15,20 @@ export const createSprite = () => {
             svgo: {
               plugins: [
                 {
-                  name: 'removeAttrs', // Specify plugin name
+                  name: 'removeAttrs',
                   params: {
-                    attrs: '(fill|stroke)' // Remove fill and stroke attributes
+                    attrs: '(fill|stroke)'
                   }
                 },
                 {
-                  name: 'addAttributesToSVGElement', // Specify plugin name
+                  name: 'addAttributesToSVGElement',
                   params: {
                     attributes: [
                       {
-                        'fill': 'currentColor' // Set fill to currentColor
+                        'fill': 'currentColor'
                       },
                       {
-                        'stroke': 'currentColor' // Set stroke to currentColor
+                        'stroke': 'currentColor'
                       }
                     ]
                   }
@@ -39,10 +39,9 @@ export const createSprite = () => {
         ]
       }
     }))
-    .pipe(gulp.dest('src/asstes/images/')); // Output destination
+    .pipe(gulp.dest('src/assets/images/'));
 };
 
-// Default task
 const defaultTask = gulp.series(createSprite);
 
 export default defaultTask;

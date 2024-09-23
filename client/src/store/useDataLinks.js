@@ -1,15 +1,16 @@
 import { defineStore } from 'pinia';
-import { ref, computed, watch } from 'vue';
+import { ref, computed } from 'vue';
 
 export const useDataLinks = defineStore('dataStoreLinks', () => {
   const data = ref([])
   const res = ref([])
   const getData = computed(() => data.value)
+  let prod = false;
+  const path = prod ? 'https://andrey-andreevich.ru' : 'http://restraunt-vue';
+
   async function fetchLinks() {
     try {
-      const response = await fetch(
-        'http://restraunt-vue/server/test.php?action=links'
-      );
+      const response = await fetch(`${path}/server/test.php?action=links`);
       if (!response.ok) {
         throw new Error('Ошибка сети');
       }

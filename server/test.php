@@ -4,15 +4,10 @@ include './db/TABLELINKS.php';
 
 $tableLinks = "linksMenu";
 
-$host = '127.0.0.1';
-$username = 'root';
-$password = '';
-$databaseName = 'restaurant';
-
-$database = new CRUDDB($host, $username, $password, $databaseName);
+$database = new CRUDDB('false');
 
 if (isset($_GET['action'])) {
-  $database1 = new TABLELINKS($host, $username, $password, $databaseName);
+  $database1 = new TABLELINKS('false');
   switch ($_GET['action']) {
     case 'create':
       $database1->initTableLinks($tableLinks);
@@ -24,8 +19,6 @@ if (isset($_GET['action'])) {
       if (isset($_GET['name']) && isset($_GET['path'])) {
         $name = $_GET['name'];
         $path = $_GET['path'];
-        // $database1 = new TABLELINKS($host, $username, $password, $databaseName);
-        // $database1->initTableLinks($tableLinks);
         $database->addLink($tableLinks, $name, $path);
 
       } else {
@@ -41,8 +34,6 @@ if (isset($_GET['action'])) {
       }
       break;
     case 'links':
-      $database1 = new TABLELINKS($host, $username, $password, $databaseName);
-      // $database1->insertIntoTable($tableName, $data);
       echo $database->getData($tableLinks);
       break;
     default:
