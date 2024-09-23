@@ -12,6 +12,7 @@
   "dependencies": {
     "pinia": "^2.2.1",
     "three": "^0.167.1",
+    "uuid": "^10.0.0",
     "vue": "^3.4.31",
     "vue-router": "^4.4.2"
   },

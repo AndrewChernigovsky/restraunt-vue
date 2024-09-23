@@ -24,8 +24,6 @@ if (isset($_GET['action'])) {
       if (isset($_GET['name']) && isset($_GET['path'])) {
         $name = $_GET['name'];
         $path = $_GET['path'];
-        // $database1 = new TABLELINKS($host, $username, $password, $databaseName);
-        // $database1->initTableLinks($tableLinks);
         $database->addLink($tableLinks, $name, $path);
 
       } else {

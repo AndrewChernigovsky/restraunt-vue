@@ -12,7 +12,7 @@ class CRUDDB extends ConnectDB
   {
     $tableCreationQuery = "
     CREATE TABLE IF NOT EXISTS $tableName (
-      id INT AUTO_INCREMENT PRIMARY KEY,
+      id  VARCHAR(255) NOT NULL PRIMARY KEY,
       name VARCHAR(255) NOT NULL,
       path VARCHAR(255) NOT NULL
     )";
@@ -102,7 +102,7 @@ class CRUDDB extends ConnectDB
     }
 
     // Привязка параметра id
-    $stmt->bind_param("i", $id); // Предполагаем, что id - это целое число
+    $stmt->bind_param("s", $id); // Предполагаем, что id - это целое число
 
     // Выполнение запроса
     if ($stmt->execute() === TRUE) {

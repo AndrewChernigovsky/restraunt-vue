@@ -32,17 +32,26 @@
 import { ref, watchEffect } from 'vue';
 import { useDataLinks } from '@/store/useDataLinks.js';
 import { storeToRefs } from 'pinia';
+import { v4 as uuidv4 } from 'uuid'; // Importing the v4 function from uuid
+
+const uuid = ref('');
+
+function generateUUID() {
+  uuid.value = uuidv4(); // Generate a new UUID
+}
 
 const store = useDataLinks();
 const { getData } = storeToRefs(store);
-// const { addLink } = useDataLinks();
 
 const links = ref([]);
 const newLink = ref({ name: '', path: '' });
-const newDataLinks = ref([]);
 
 async function addedLink(name, path) {
-  const newLinkEntry = { name: name, path: path };
+  generateUUID();
+  let id = uuid.value;
+  console.log(id, 'ID');
+  const newLinkEntry = { id: id, name: name, path: path };
+  console.log(newLinkEntry, 'links');
   store.addLink(newLinkEntry);
   try {
     await fetch(
@@ -82,6 +91,7 @@ watchEffect(() => {
   links.value = getData;
 });
 </script>
+
 <style lang="scss" scoped>
 .buttons-edit {
   position: absolute;
