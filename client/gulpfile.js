@@ -2,11 +2,13 @@ import gulp from 'gulp';
 import svgSprite from 'gulp-svg-sprite';
 
 export const createSprite = () => {
-  return gulp.src('src/images/icons/*.svg')
+  return gulp.src('src/images/icons/**/*.svg')
     .pipe(svgSprite({
       mode: {
-        sprite: "sprite.svg",
-        name: 'sprite',
+
+        stack: {
+          sprite: "sprite.svg",
+        },
       },
 
       shape: {

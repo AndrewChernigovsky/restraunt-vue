@@ -2,7 +2,8 @@ import { createApp, defineAsyncComponent } from 'vue';
 import { createPinia } from 'pinia';
 import App from './App.vue';
 import router from './router';
-import sprite from '@/images/icons/sprite.js'
+import sprite from '@/images/icons/sprite.js';
+import '@/styles/global.scss';
 
 const app = createApp(App);
 const pinia = createPinia();
