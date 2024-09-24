@@ -10,10 +10,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   http_response_code(200);
   exit;
 }
-$host = '127.0.0.1';
-$username = 'root';
-$password = '';
-$database = 'restaurant';
+$host = 'localhost';
+$username = 'u2642915_default';
+$password = 'yPIgyj5791pNxJPr';
+$database = 'u2642915_default';
 
 $conn = new mysqli($host, $username, $password, $database);
 

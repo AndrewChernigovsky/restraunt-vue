@@ -10,33 +10,34 @@ class ConnectDB
   public $conn;
   public $data;
 
-  public function __construct($host, $username, $password, $database)
+  public function __construct()
   {
-    // Создание подключения
-    $this->conn = new mysqli($host, $username, $password, $database);
+    // $isProd = filter_var($prod, FILTER_VALIDATE_BOOLEAN);
+    $isProd = false;
+    $host = $isProd ? 'localhost' : '127.0.0.1';
+    $username = $isProd ? 'u2642915_default' : 'root';
+    $password = $isProd ? 'yPIgyj5791pNxJPr' : '';
+    $databaseName = $isProd ? 'u2642915_default' : 'restaurant';
 
-    // Проверка подключения
+    $this->conn = new mysqli($host, $username, $password, $databaseName);
+
     if ($this->conn->connect_error) {
       die(json_encode(['error' => 'Ошибка подключения: ' . $this->conn->connect_error]));
     }
 
     if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
-      // Если это preflight-запрос, просто возвращаем 200 OK
       http_response_code(200);
       exit;
     }
-    // Обработка POST-запроса
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $this->data = json_decode(file_get_contents('php://input'), true);
     }
   }
-
   public function getConnection()
   {
     return $this->conn;
   }
-
   public function closeConnection()
   {
     if ($this->conn) {
